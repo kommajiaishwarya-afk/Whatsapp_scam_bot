@@ -12,8 +12,8 @@ def analyze_message_for_scam(message_text):
     return "This message looks safe."
 
 # Twilio WhatsApp webhook route
-@application.route("/whatsapp", methods=['POST'])
-def whatsapp_reply():
+@application.route("/webhook", methods=['POST'])
+def webhook():
     incoming_msg = request.values.get('Body', '')
     response_text = analyze_message_for_scam(incoming_msg)
     
