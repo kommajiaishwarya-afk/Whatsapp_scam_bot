@@ -1,29 +1,29 @@
 from flask import Flask
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-def detect_scam(text):
-    text = text.lower()
+def analyze_message_for_scam(message_text):
+    message_text = message_text.lower()
 
-    if "free" in text or "win" in text or "loan" in text:
-        return "⚠️ This message looks suspicious."
+    if "free" in message_text or "win" in message_text or "loan" in message_text:
+        return "This message looks suspicious."
 
-    if ".xyz" in text or ".top" in text:
-        return "❌ This link may be a scam."
+    if ".xyz" in message_text or ".top" in message_text:
+        return " This link may be a scam."
 
-    return "✅ This message looks safe."
+    return "This message looks safe."
 
 
-@app.route("/")
-def home():
+@application.route("/")
+def index():
     return "WhatsApp Scam Detector Bot Running!"
 
 
-# 👇 ADD THIS PART BELOW
-@app.route("/test/<message>")
-def test(message):
-    return detect_scam(message)
+@application.route("/scan/<input_message>")
+def scan_message(input_message):
+    return analyze_message_for_scam(input_message)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port=int(os.environ.get("PORT",10000))
+    application.run(host="0.0.0.0",port=10000)
